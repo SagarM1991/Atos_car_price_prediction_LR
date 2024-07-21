@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>Atos car price</title>
+    <style>
+            body{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f0f0f0;
+            }
+
+            form {
+                width: 1200px;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px
+                    rgba(0, 0, 0, 0.1);
+            }
+
+            fieldset {
+                border: 1px solid black;
+                padding: 10px;
+                margin: 0;
+            }
+
+            legend {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            input[type="text"],
+            select{
+                width: calc(100% - 20px);
+                padding: 8px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            input[type="radio"] {
+                margin-left: 20px;
+            }
+
+            input[type="submit"] {
+                padding: 10px 20px;
+
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+</head>
+<body>
+<div class="container">  
+  <form class="form-horizontal" action="/predict_car_price" method="post">
+    <fieldset>
+        <legend>
+            <h3>Atos Car Price Prediction</h3>
+        </legend>
+        <p>{{price}}</p>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="symboling">Symboling:</label>
+            <div class="col-sm-2">
+                <input type="text" id="symboling" name="symboling">
+            </div>    
+            <label class="control-label col-sm-2" for="normalized_losses">Normalized_losses:</label>
+            <div class="col-sm-2">
+                <input type="text" id="normalized_losses" name="normalized_losses">
+            </div>    
+            <label class="control-label col-sm-2" for="fuel_type">Fuel_type:</label>
+            <div class="col-sm-2">
+                <select id="fuel_type" name="fuel_type">
+                    <option value="">Select Fuel-type</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="gas">Gas</option>
+                </select>
+            </div>    
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="aspiration">Aspiration:</label>
+            <div class="col-sm-2">
+                <select id="aspiration" name="aspiration">
+                    <option value="">Select Aspiration</option>
+                    <option value="std">STD</option>
+                    <option value="turbo">Turbo</option>
+                </select>
+            </div>
+            <label class="control-label col-sm-2" for="num_of_doors">Num_of_doors:</label>
+            <div class="col-sm-2">
+                <select id="num_of_doors" name="num_of_doors">
+                    <option value="">Select Num_of_doors</option>
+                    <option value="two">Two</option>
+                    <option value="four">Four</option>
+                </select>
+            </div>
+            <label class="control-label col-sm-2" for="body_style">Body_style:</label>
+            <div class="col-sm-2">
+                <select id="body_style" name="body_style">
+                    <option value="">Select Body_style</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="hatchback">Hatchback</option>
+                    <option value="wagon">Wagon</option>
+                    <option value="Hardtop">Hardtop</option>
+                    <option value="Convertible">Convertible</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group"> 
+            <label class="control-label col-sm-2" for="drive_wheels">Drive_wheels:</label>
+            <div class="col-sm-2">
+                <select id="drive_wheels" name="drive_wheels">
+                    <option value="">Select Drive_wheels</option>
+                    <option value="fwd">FWD</option>
+                    <option value="rwd">RWD</option>
+                    <option value="4wd">4WD</option>
+                </select>
+            </div>
+            <label class="control-label col-sm-2" for="engine_location">Engine_location:</label>
+            <div class="col-sm-2">
+                <select id="engine_location" name="engine_location">
+                    <option value="">Select Engine_location</option>
+                    <option value="front">Front</option>
+                    <option value="rear">Rear</option>
+                </select>
+            </div>
+            <label class="control-label col-sm-2" for="wheel_base">Wheel_base:</label>
+            <div class="col-sm-2">
+                <input type="text" id="wheel_base" name="wheel_base">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="length">Length:</label>
+            <div class="col-sm-2">
+                <input type="text" id="length" name="length">
+            </div>        
+            <label class="control-label col-sm-2" for="width">Width:</label>
+            <div class="col-sm-2">
+                <input type="text" id="width" name="width">
+            </div>
+            <label class="control-label col-sm-2" for="height">Height:</label>
+            <div class="col-sm-2">
+                <input type="text" id="height" name="height">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="curb_weight">Curb_weight:</label>
+            <div class="col-sm-2">
+                <input type="text" id="curb_weight" name="curb_weight">
+            </div>
+            <label class="control-label col-sm-2" for="engine_type">Engine_type:</label>
+            <div class="col-sm-2">
+                <select id="engine_type" name="engine_type">
+                    <option value="">Select Engine_type</option>
+                    <option value="ohc">OHC</option>
+                    <option value="ohcf">OHCF</option>
+                    <option value="ohcv">OHCV</option>
+                    <option value="dohc">DOHC</option>
+                    <option value="l">L</option>
+                    <option value="rotor">ROTOR</option>
+                    <option value="dohcv">DOHCV</option>
+                </select>
+            </div>        
+            <label class="control-label col-sm-2" for="num_of_cylinders">Num_of_cylinders:</label>
+            <div class="col-sm-2">
+                <select id="num_of_cylinders" name="num_of_cylinders">
+                    <option value="">Select Num_of_cylinders</option>
+                    <option value="two">Two</option>
+                    <option value="three">Three</option>
+                    <option value="four">Four</option>
+                    <option value="five">Five</option>
+                    <option value="six">Six</option>                    
+                    <option value="eight">Eight</option>
+                    <option value="twelve">Twelve</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="engine_size">Engine_size:</label>
+            <div class="col-sm-2">
+                <input type="text" id="engine_size" name="engine_size">
+            </div>
+            <label class="control-label col-sm-2" for="fuel_system">Fuel_system:</label>
+            <div class="col-sm-2">
+                <select id="fuel_system" name="fuel_system">
+                    <option value="">Select Fuel_system</option>
+                    <option value="mpfi">MPFI</option>
+                    <option value="2bbl">2BBL</option>
+                    <option value="idi">IDI</option>
+                    <option value="1bbl">1BBL</option>
+                    <option value="spdi">SPDI</option>
+                    <option value="4bbl">4BBL</option>
+                    <option value="mfi">MFI</option>
+                    <option value="spfi">SPFI</option>
+                </select>
+            </div>
+            <label class="control-label col-sm-2" for="bore">Bore:</label>
+            <div class="col-sm-2">
+                <input type="text" id="bore" name="bore">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="stroke">Stroke:</label>
+            <div class="col-sm-2">
+                <input type="text" id="stroke" name="stroke">
+            </div>        
+            <label class="control-label col-sm-2" for="compression_ratio">Compression_ratio:</label>
+            <div class="col-sm-2">
+                <input type="text" id="compression_ratio" name="compression_ratio">
+            </div>
+            <label class="control-label col-sm-2" for="horsepower">Horsepower:</label>
+            <div class="col-sm-2">
+                <input type="text" id="horsepower" name="horsepower">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="peak_rpm">Peak_rpm:</label>
+            <div class="col-sm-2">
+                <input type="text" id="peak_rpm" name="peak_rpm">
+            </div>
+            <label class="control-label col-sm-2" for="city_mpg">City_mpg:</label>
+            <div class="col-sm-2">
+                <input type="text" id="city_mpg" name="city_mpg">
+            </div>
+            <label class="control-label col-sm-2" for="highway_mpg">Highway_mpg:</label>
+            <div class="col-sm-2">
+                <input type="text" id="highway_mpg" name="highway_mpg">
+            </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+    </fieldset>
+  </form>
+</div>
+</body>
+</html>
